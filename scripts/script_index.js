@@ -34,6 +34,36 @@ const propiedades_venta = [
     smoke: false,
     pets: true,
   },
+  {
+    nombre: "Casa familiar con amplio jardín",
+    src: "https://fastly.picsum.photos/id/11/2500/1667.jpg?hmac=xxjFJtAPgshYkysU_aqx2sZir-kIOjNR9vx0te7GycQ",
+    descripcion: "Hermosa casa ideal para familias, con un gran jardín y zona de juegos",
+    ubicacion: "101 Family Street, Suburbia, CA 67890",
+    habitaciones: 5,
+    costo: 3500,
+    smoke: false,
+    pets: true,
+  },
+  {
+    nombre: "Departamento moderno en zona céntrica",
+    src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=60",
+    descripcion: "Moderno departamento en el corazón de la ciudad, cerca de todo",
+    ubicacion: "22 Downtown Ave, Capital City, CA 10001",
+    habitaciones: 2,
+    costo: 2000,
+    smoke: true,
+    pets: false,
+  },
+  {
+    nombre: "Chalet con piscina privada",
+    src: "https://fastly.picsum.photos/id/142/4272/2848.jpg?hmac=z8IS_an6FQ8ijJOBd-wSVg1JTZbeIDG4TbjHwLQbs0I",
+    descripcion: "Lujoso chalet con piscina privada y terraza",
+    ubicacion: "45 Ocean View, Coastal Town, CA 55555",
+    habitaciones: 4,
+    costo: 6000,
+    smoke: false,
+    pets: true,
+  }
 ];
 const propiedades_alquiler = [
   {
@@ -69,116 +99,210 @@ const propiedades_alquiler = [
     smoke: false,
     pets: false,
   },
+   {
+    nombre: "Loft minimalista en barrio artístico",
+    src: "https://images.unsplash.com/photo-1653918834459-c3e6bb3c47a1?q=80&w=2191&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    descripcion: "Loft de diseño minimalista, ideal para artistas o parejas jóvenes",
+    ubicacion: "50 Art District, Creative City, CA 80808",
+    habitaciones: 1,
+    costo: 1500,
+    smoke: true,
+    pets: false,
+  },
+  {
+    nombre: "Cabaña rústica en el bosque",
+    src: "https://images.unsplash.com/photo-1605989719315-87eca153de3b?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    descripcion: "Acogedora cabaña en medio del bosque, perfecta para desconectar",
+    ubicacion: "Forest Path 22, Mountain Woods, CA 44444",
+    habitaciones: 2,
+    costo: 1700,
+    smoke: true,
+    pets: true,
+  },
+  {
+    nombre: "Apartamento amoblado cerca del parque",
+    src: "https://images.unsplash.com/photo-1650389236371-43a2e2b9ec65?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    descripcion: "Cómodo apartamento totalmente amoblado, a pasos del parque central",
+    ubicacion: "Park Lane 88, Green City, CA 12345",
+    habitaciones: 2,
+    costo: 2100,
+    smoke: false,
+    pets: true,
+  }
 ];
 
-//Iteraciones
-if(ventas){
-let listaVentas = "";
-for (propiedad of propiedades_venta) {
-  listaVentas += `
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <img
-          src= "${propiedad.src}"
-          class="card-img-top"
-          alt="Imagen de propiedad"
-        />
-        <div class="card-body">
-          <h5 class="card-title">${propiedad.nombre}</h5>
-          <p class="card-text">
-            ${propiedad.descripcion}
-          </p>
-          <p>
-            <i class="fas fa-map-marker-alt"></i> ${propiedad.ubicacion}
-          </p>
-          <p>
-            <i class="fas fa-bed"></i> ${propiedad.habitaciones} Habitaciones
-          </p>
-          <p>
-            <i class="fas fa-dollar-sign"></i> ${propiedad.costo}
-          </p>
-          <p class="${
-            propiedad.smoke == true ? "text-success" : "text-danger"
-          }">
-            <i class="${
-              propiedad.smoke == true
-                ? "fa-solid fa-smoking"
-                : "fa-solid fa-ban-smoking"
-            }"></i>
-            ${
-              propiedad.smoke == true
-                ? "Permitido fumar"
-                : "No se permite fumar"
-            }
-            </p>
-          <p class="${propiedad.pets == true ? "text-success" : "text-danger"}">
-            <i class="${
-              propiedad.pets == true ? "fa-solid fa-paw" : "fa-solid fa-ban"
-            }"></i> 
-            ${
-              propiedad.pets == true
-                ? "Mascotas bienvenidas"
-                : "No se permiten mascotas"
-            }
-          </p>
-        </div>
+// Condición: si ambas secciones existen (index.html), mostrar sólo 3
+if (ventas !== null && alquiler !== null) {
+
+  let listaVentas = "";
+  for (let i = 0; i < 3 ; i++) {
+    const propiedad = propiedades_venta[i];
+    listaVentas += generarHTML(propiedad);
+  }
+  ventas.innerHTML = listaVentas;
+
+  let listaAlquiler = "";
+  for (let i = 0; i < 3; i++) {
+    const propiedad = propiedades_alquiler[i];
+    listaAlquiler += generarHTML(propiedad);
+  }
+  alquiler.innerHTML = listaAlquiler;
+
+} else {
+  // Si al menos una sección es null, mostramos todas las propiedades disponibles
+
+  if (ventas !== null) {
+    let listaVentas = "";
+    for (let i = 0; i < propiedades_venta.length; i++) {
+      const propiedad = propiedades_venta[i];
+      listaVentas += generarHTML(propiedad);
+    }
+    ventas.innerHTML = listaVentas;
+  }
+
+  if (alquiler !== null) {
+    let listaAlquiler = "";
+    for (let i = 0; i < propiedades_alquiler.length; i++) {
+      const propiedad = propiedades_alquiler[i];
+      listaAlquiler += generarHTML(propiedad);
+    }
+    alquiler.innerHTML = listaAlquiler;
+  }
+}
+
+// Función
+function generarHTML(propiedad) {
+  return `
+  <div class="col-md-4 mb-4">
+    <div class="card">
+      <img src="${propiedad.src}" class="card-img-top" alt="Imagen de propiedad" />
+      <div class="card-body">
+        <h5 class="card-title">${propiedad.nombre}</h5>
+        <p class="card-text">${propiedad.descripcion}</p>
+        <p><i class="fas fa-map-marker-alt"></i> ${propiedad.ubicacion}</p>
+        <p><i class="fas fa-bed"></i> ${propiedad.habitaciones} Habitaciones</p>
+        <p><i class="fas fa-dollar-sign"></i> ${propiedad.costo}</p>
+        <p class="${propiedad.smoke ? "text-success" : "text-danger"}">
+          <i class="${propiedad.smoke ? "fa-solid fa-smoking" : "fa-solid fa-ban-smoking"}"></i>
+          ${propiedad.smoke ? "Permitido fumar" : "No se permite fumar"}
+        </p>
+        <p class="${propiedad.pets ? "text-success" : "text-danger"}">
+          <i class="${propiedad.pets ? "fa-solid fa-paw" : "fa-solid fa-ban"}"></i>
+          ${propiedad.pets ? "Mascotas bienvenidas" : "No se permiten mascotas"}
+        </p>
       </div>
-    </div>`;
+    </div>
+  </div>`;
 }
-ventas.innerHTML = listaVentas;
-}
-if(alquiler){
-let listaAlquiler = "";
-for (propiedad of propiedades_alquiler) {
-  listaAlquiler += `
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <img
-          src= "${propiedad.src}"
-          class="card-img-top"
-          alt="Imagen de propiedad"
-        />
-        <div class="card-body">
-          <h5 class="card-title">${propiedad.nombre}</h5>
-          <p class="card-text">
-            ${propiedad.descripcion}
-          </p>
-          <p>
-            <i class="fas fa-map-marker-alt"></i> ${propiedad.ubicacion}
-          </p>
-          <p>
-            <i class="fas fa-bed"></i> ${propiedad.habitaciones} Habitaciones
-          </p>
-          <p>
-            <i class="fas fa-dollar-sign"></i> ${propiedad.costo}
-          </p>
-          <p class="${
-            propiedad.smoke == true ? "text-success" : "text-danger"
-          }">
-            <i class="${
-              propiedad.smoke == true
-                ? "fa-solid fa-smoking"
-                : "fa-solid fa-ban-smoking"
-            }"></i>
-            ${
-              propiedad.smoke == true
-                ? "Permitido fumar"
-                : "No se permite fumar"
-            }
-            </p>
-          <p class="${propiedad.pets == true ? "text-success" : "text-danger"}">
-            <i class="${
-              propiedad.pets == true ? "fa-solid fa-paw" : "fa-solid fa-ban"
-            }"></i> 
-            ${
-              propiedad.pets == true
-                ? "Mascotas bienvenidas"
-                : "No se permiten mascotas"
-            }
-          </p>
-        </div>
-      </div>
-    </div>`;
-}
-alquiler.innerHTML = listaAlquiler;
-}
+
+//Iteraciones, en este caso se aplica cuando sólo se verifica la existencia de una sección, pero muestra todas las propiedades
+// if(ventas){
+// let listaVentas = "";
+// for (propiedad of propiedades_venta) {
+//   listaVentas += `
+//     <div class="col-md-4 mb-4">
+//       <div class="card">
+//         <img
+//           src= "${propiedad.src}"
+//           class="card-img-top"
+//           alt="Imagen de propiedad"
+//         />
+//         <div class="card-body">
+//           <h5 class="card-title">${propiedad.nombre}</h5>
+//           <p class="card-text">
+//             ${propiedad.descripcion}
+//           </p>
+//           <p>
+//             <i class="fas fa-map-marker-alt"></i> ${propiedad.ubicacion}
+//           </p>
+//           <p>
+//             <i class="fas fa-bed"></i> ${propiedad.habitaciones} Habitaciones
+//           </p>
+//           <p>
+//             <i class="fas fa-dollar-sign"></i> ${propiedad.costo}
+//           </p>
+//           <p class="${
+//             propiedad.smoke == true ? "text-success" : "text-danger"
+//           }">
+//             <i class="${
+//               propiedad.smoke == true
+//                 ? "fa-solid fa-smoking"
+//                 : "fa-solid fa-ban-smoking"
+//             }"></i>
+//             ${
+//               propiedad.smoke == true
+//                 ? "Permitido fumar"
+//                 : "No se permite fumar"
+//             }
+//             </p>
+//           <p class="${propiedad.pets == true ? "text-success" : "text-danger"}">
+//             <i class="${
+//               propiedad.pets == true ? "fa-solid fa-paw" : "fa-solid fa-ban"
+//             }"></i> 
+//             ${
+//               propiedad.pets == true
+//                 ? "Mascotas bienvenidas"
+//                 : "No se permiten mascotas"
+//             }
+//           </p>
+//         </div>
+//       </div>
+//     </div>`;
+// }
+// ventas.innerHTML = listaVentas;
+// }
+// if(alquiler){
+// let listaAlquiler = "";
+// for (propiedad of propiedades_alquiler) {
+//   listaAlquiler += `
+//     <div class="col-md-4 mb-4">
+//       <div class="card">
+//         <img
+//           src= "${propiedad.src}"
+//           class="card-img-top"
+//           alt="Imagen de propiedad"
+//         />
+//         <div class="card-body">
+//           <h5 class="card-title">${propiedad.nombre}</h5>
+//           <p class="card-text">
+//             ${propiedad.descripcion}
+//           </p>
+//           <p>
+//             <i class="fas fa-map-marker-alt"></i> ${propiedad.ubicacion}
+//           </p>
+//           <p>
+//             <i class="fas fa-bed"></i> ${propiedad.habitaciones} Habitaciones
+//           </p>
+//           <p>
+//             <i class="fas fa-dollar-sign"></i> ${propiedad.costo}
+//           </p>
+//           <p class="${
+//             propiedad.smoke == true ? "text-success" : "text-danger"
+//           }">
+//             <i class="${
+//               propiedad.smoke == true
+//                 ? "fa-solid fa-smoking"
+//                 : "fa-solid fa-ban-smoking"
+//             }"></i>
+//             ${
+//               propiedad.smoke == true
+//                 ? "Permitido fumar"
+//                 : "No se permite fumar"
+//             }
+//             </p>
+//           <p class="${propiedad.pets == true ? "text-success" : "text-danger"}">
+//             <i class="${
+//               propiedad.pets == true ? "fa-solid fa-paw" : "fa-solid fa-ban"
+//             }"></i> 
+//             ${
+//               propiedad.pets == true
+//                 ? "Mascotas bienvenidas"
+//                 : "No se permiten mascotas"
+//             }
+//           </p>
+//         </div>
+//       </div>
+//     </div>`;
+// }
+// alquiler.innerHTML = listaAlquiler;
+// }
